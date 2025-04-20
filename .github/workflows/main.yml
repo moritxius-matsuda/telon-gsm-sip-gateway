@@ -95,7 +95,7 @@ jobs:
           ./gradlew clean
           ./gradlew bundleRelease -Pkeystore.password=${{ secrets.KEYSTORE_PASSWORD }}
         working-directory: telon-gateway-app
-
+        
   download_bundle:
     runs-on: ubuntu-latest
     needs: build_android
