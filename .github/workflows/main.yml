@@ -102,9 +102,10 @@ jobs:
           cd android
           chmod +x gradlew
           ./gradlew clean
+          ./gradlew wrapper --gradle-version 8.0 --distribution-type all # Beispiel: Verwende Gradle 8.0
           ./gradlew bundleRelease -Pkeystore.password=${{ secrets.KEYSTORE_PASSWORD }}
         working-directory: telon-gateway-app
-        
+
   download_bundle:
     runs-on: ubuntu-latest
     needs: build_android
