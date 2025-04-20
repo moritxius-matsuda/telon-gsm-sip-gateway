@@ -52,19 +52,19 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
         with:
-          cmdline-tools-version: "latest"
+          cmdline-tools-version: "8.0" # Versuche eine ältere Version
 
       - name: Install Android 11 Platform
         run: |
-          ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager "platforms;android-30"
+          ${ANDROID_HOME}/cmdline-tools/8.0/bin/sdkmanager "platforms;android-30"
 
       - name: Install NDK
         run: |
-          ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager "ndk-bundle"
+          ${ANDROID_HOME}/cmdline-tools/8.0/bin/sdkmanager "ndk-bundle"
 
       - name: Install Build Tools 30.0.3
         run: |
-          ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager "build-tools;30.0.3"
+          ${ANDROID_HOME}/cmdline-tools/8.0/bin/sdkmanager "build-tools;30.0.3"
 
       - name: Download NDK r17b
         run: |
