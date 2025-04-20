@@ -49,13 +49,22 @@ jobs:
         with:
           node-version: 12
 
-      - name: Setup Android SDK (API Level 30)
+      - name: Setup Android SDK
         uses: android-actions/setup-android@v3
         with:
-          packages: |
-            platforms;android-30
-            ndk-bundle
-            build-tools;30.0.3
+          cmdline-tools-version: "latest"
+
+      - name: Install Android 11 Platform
+        run: |
+          ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager "platforms;android-30"
+
+      - name: Install NDK
+        run: |
+          ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager "ndk-bundle"
+
+      - name: Install Build Tools 30.0.3
+        run: |
+          ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager "build-tools;30.0.3"
 
       - name: Download NDK r17b
         run: |
