@@ -26,6 +26,16 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Cache Gradle Packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('android/build.gradle', 'android/app/build.gradle', 'android/gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
       - name: Cache Node.js
         uses: actions/cache@v4
         with:
@@ -42,9 +52,10 @@ jobs:
       - name: Setup Android SDK (API Level 30)
         uses: android-actions/setup-android@v3
         with:
-          api-level: 30
-          ndk: true
-          build-tools: 30.0.3
+          packages: |
+            platforms;android-30
+            ndk-bundle
+            build-tools;30.0.3
 
       - name: Download NDK r17b
         run: |
@@ -82,7 +93,6 @@ jobs:
           cd android
           chmod +x gradlew
           ./gradlew clean
-          # !./gradlew wrapper --gradle-version 6.2.2 --distribution-type all
           ./gradlew bundleRelease -Pkeystore.password=${{ secrets.KEYSTORE_PASSWORD }}
         working-directory: telon-gateway-app
 
