@@ -97,12 +97,16 @@ jobs:
           npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/build/intermediates/assets/release/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release
         working-directory: telon-gateway-app
 
+      - name: Remove Gradle Cache (Force Update)
+        run: |
+          rm -rf ~/.gradle/wrapper
+
       - name: Build Android Release
         run: |
           cd android
           chmod +x gradlew
+          ./gradlew wrapper --gradle-version 8.0 --distribution-type all # Stelle sicher, dass die Version korrekt ist
           ./gradlew clean
-          ./gradlew wrapper --gradle-version 8.0 --distribution-type all # Beispiel: Verwende Gradle 8.0
           ./gradlew bundleRelease -Pkeystore.password=${{ secrets.KEYSTORE_PASSWORD }}
         working-directory: telon-gateway-app
 
